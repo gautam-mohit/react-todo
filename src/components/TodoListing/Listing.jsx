@@ -31,6 +31,23 @@ export default function Listing(props) {
     setOriginalTodos(newTodo);
   };
 
+  const deleteTodo = (todo) => {
+    //   creating new copy
+    const newTodo = { ...todos };
+    // adding new element
+    delete newTodo[todo];
+    setTodos(newTodo);
+    setOriginalTodos(newTodo);
+  };
+  const updateTodo = (todo, newValue) => {
+    // //   creating new copy
+    // const newTodo = { ...todos };
+    // // adding new element
+    // newTodo[todo] = status;
+    // setTodos(newTodo);
+    // setOriginalTodos(newTodo);
+  };
+
   const filterTodo = (status) => {
     switch (status) {
       case "complete":
@@ -66,6 +83,8 @@ export default function Listing(props) {
             status={todos[todo]}
             key={todo}
             onStatusChange={changeStatus}
+            onUpdate={updateTodo}
+            onDelete={deleteTodo}
           />
         );
       })}
