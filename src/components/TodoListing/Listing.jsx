@@ -9,6 +9,7 @@ import TodoItem from "./TodoItem";
 export default function Listing(props) {
   const { item } = props;
   const [todos, setTodos] = useState({});
+  const [originalTodos, setOriginalTodos] = useState({});
 
   useEffect(() => {
     if (item) {
@@ -17,6 +18,7 @@ export default function Listing(props) {
       // adding new element
       newTodo[item] = false;
       setTodos(newTodo);
+      setOriginalTodos(newTodo);
     }
   }, [item]);
 
@@ -26,6 +28,33 @@ export default function Listing(props) {
     // adding new element
     newTodo[todo] = status;
     setTodos(newTodo);
+    setOriginalTodos(newTodo);
+  };
+
+  const filterTodo = (status) => {
+    switch (status) {
+      case "complete":
+        const completeTodos = {};
+        Object.keys(originalTodos).forEach((todo) => {
+          if (todos[todo]) {
+            completeTodos[todo] = true;
+          }
+        });
+        setTodos(completeTodos);
+        break;
+      case "incomplete":
+        const inCompleteTodos = {};
+        Object.keys(originalTodos).forEach((todo) => {
+          if (!todos[todo]) {
+            inCompleteTodos[todo] = false;
+          }
+        });
+        setTodos(inCompleteTodos);
+        break;
+      default:
+        setTodos(originalTodos);
+        break;
+    }
   };
 
   return (
@@ -40,6 +69,12 @@ export default function Listing(props) {
           />
         );
       })}
+      <div className="filter">
+        <p>{Object.keys(todos).length} Todos</p>
+        <button onClick={() => filterTodo("all")}>All</button>
+        <button onClick={() => filterTodo("complete")}>Complete</button>
+        <button onClick={() => filterTodo("incomplete")}>Incomplete</button>
+      </div>
     </div>
   );
 }
