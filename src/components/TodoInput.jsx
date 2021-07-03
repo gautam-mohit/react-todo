@@ -7,6 +7,7 @@ export default function TodoInput(props) {
     e.preventDefault();
     const form = document.forms["todoForm"];
     getValue(form.todoText.value);
+    form.todoText.value = "";
   };
 
   return (

@@ -11,17 +11,34 @@ export default function Listing(props) {
   const [todos, setTodos] = useState({});
 
   useEffect(() => {
+    if (item) {
+      //   creating new copy
+      const newTodo = { ...todos };
+      // adding new element
+      newTodo[item] = false;
+      setTodos(newTodo);
+    }
+  }, [item]);
+
+  const changeStatus = (todo, status) => {
     //   creating new copy
     const newTodo = { ...todos };
     // adding new element
-    newTodo[item] = false;
+    newTodo[todo] = status;
     setTodos(newTodo);
-  }, [item]);
+  };
 
   return (
     <div>
       {Object.keys(todos).map((todo) => {
-        return <TodoItem name={todo} status={todos[todo]} key={todo} />;
+        return (
+          <TodoItem
+            name={todo}
+            status={todos[todo]}
+            key={todo}
+            onStatusChange={changeStatus}
+          />
+        );
       })}
     </div>
   );
