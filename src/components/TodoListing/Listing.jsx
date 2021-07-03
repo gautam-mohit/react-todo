@@ -39,13 +39,13 @@ export default function Listing(props) {
     setTodos(newTodo);
     setOriginalTodos(newTodo);
   };
-  const updateTodo = (todo, newValue) => {
-    // //   creating new copy
-    // const newTodo = { ...todos };
-    // // adding new element
-    // newTodo[todo] = status;
-    // setTodos(newTodo);
-    // setOriginalTodos(newTodo);
+  const updateTodo = (oldValue, newValue) => {
+    //   creating new copy
+    const newTodo = { ...todos };
+    newTodo[newValue] = newTodo[oldValue];
+    delete newTodo[oldValue];
+    setTodos(newTodo);
+    setOriginalTodos(newTodo);
   };
 
   const filterTodo = (status) => {
